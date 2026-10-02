@@ -30,23 +30,23 @@ private:
 	IEngineObject* engineObject;
 
 	//Sends a data stream message
-	void StreamSend(EndpointInfo* server, SDLNet_DatagramSocket* socket, int clientTime, LibSettings* settings);
+	void StreamSend(EndpointInfo* server, NET_DatagramSocket* socket, int clientTime, LibSettings* settings);
 	//Sends the server a request for an ID
-	void SendIDRequest(EndpointInfo* server, SDLNet_DatagramSocket* socket);
+	void SendIDRequest(EndpointInfo* server, NET_DatagramSocket* socket);
 	//sends initialization message detailing contained data types to server
-	void SendInitializationMessage(EndpointInfo* server, SDLNet_DatagramSocket* socket, MessageSender* sender, IWrapper* wrapper);
+	void SendInitializationMessage(EndpointInfo* server, NET_DatagramSocket* socket, MessageSender* sender, IWrapper* wrapper);
 protected:
 public:
 	//Create the object in an uninitialized state and request an ID from the server
-	OwnedNetworkObject(EndpointInfo* server, SDLNet_DatagramSocket* socket, IEngineObject* engineObject, IWrapper* wrapper);
+	OwnedNetworkObject(EndpointInfo* server, NET_DatagramSocket* socket, IEngineObject* engineObject, IWrapper* wrapper);
 	~OwnedNetworkObject();
 	//Initialize the object with an ID provided by the server
 	//Returns true if object was initialized
-	bool IDRequestReceived(int ID, SDLNet_DatagramSocket* socket, EndpointInfo* server, MessageSender* sender, IWrapper* wrapper);
+	bool IDRequestReceived(int ID, NET_DatagramSocket* socket, EndpointInfo* server, MessageSender* sender, IWrapper* wrapper);
 
 	//Updates the object, sending a message if required
 	// @param deltaTime - the time in seconds since last update was called on this object
-	void Update(float deltaTime, EndpointInfo* server, SDLNet_DatagramSocket* socket, int clientTime, LibSettings* settings);
+	void Update(float deltaTime, EndpointInfo* server, NET_DatagramSocket* socket, int clientTime, LibSettings* settings);
 
 	int GetID() { return ID; }
 };

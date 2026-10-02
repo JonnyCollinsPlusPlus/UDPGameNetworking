@@ -3,25 +3,25 @@
 #include <string>
 //manages an endpoint
 struct EndpointInfo {
-	SDLNet_Address* address;
+	NET_Address* address;
 	int port;
 	EndpointInfo(std::string addressString, int pPort) {
-		address = SDLNet_ResolveHostname(addressString.c_str());
-		SDLNet_WaitUntilResolved(address, -1); //TODO fix timeout
+		address = NET_ResolveHostname(addressString.c_str());
+		NET_WaitUntilResolved(address, -1); //TODO fix timeout
 		port = pPort;
 	}
-	EndpointInfo(SDLNet_Address* addressRef, int pPort) {
-		address = SDLNet_RefAddress(addressRef);
+	EndpointInfo(NET_Address* addressRef, int pPort) {
+		address = NET_RefAddress(addressRef);
 		port = pPort;
 	}
 	~EndpointInfo() {
-		SDLNet_UnrefAddress(address);
+		NET_UnrefAddress(address);
 	}
 	bool operator==(const EndpointInfo& other) {
 		return other.port
 			== port
-			&& SDLNet_GetAddressString(other.address)
-			== SDLNet_GetAddressString(address);
+			&& NET_GetAddressString(other.address)
+			== NET_GetAddressString(address);
 	}
 	bool operator!=(const EndpointInfo& other) {
 		return !(*this == other);

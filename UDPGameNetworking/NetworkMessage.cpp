@@ -3,14 +3,14 @@
 NetworkMessage::NetworkMessage()
 {
 }
-NetworkMessage::NetworkMessage(SDLNet_Datagram* datagramToProcess)
+NetworkMessage::NetworkMessage(NET_Datagram* datagramToProcess)
 {
 	Uint8* buffer = (Uint8*)datagramToProcess->buf;
 	int bufferLength = datagramToProcess->buflen;
 	std::string outData = NetworkUtilities::UnpackMessage(buffer, bufferLength);
 	messageType = NetworkUtilities::UnpackHeader(outData);
 	extraData = outData.substr(4);
-	fromAddress = SDLNet_RefAddress(datagramToProcess->addr);
+	fromAddress = NET_RefAddress(datagramToProcess->addr);
 	fromPort = datagramToProcess->port;
 }
 
@@ -34,7 +34,7 @@ std::string NetworkMessage::GetExtraData()
 {
 	return extraData;
 }
-SDLNet_Address* NetworkMessage::GetAddress()
+NET_Address* NetworkMessage::GetAddress()
 {
 	return fromAddress;
 }

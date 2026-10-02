@@ -27,7 +27,7 @@ void Server::ConfirmClientConnection(NetworkMessage* msg)
     connectedClients->push_back(client);
     sender->NewClientConnected(client);
     connectorInfo = nullptr;
-    std::cout << "Successfully connected client from address: " << SDLNet_GetAddressString(client->address) << std::endl;
+    std::cout << "Successfully connected client from address: " << NET_GetAddressString(client->address) << std::endl;
 }
 
 void Server::TryConnectClient(NetworkMessage* msg)
@@ -122,10 +122,10 @@ Server::Server(std::string ip, int serverPort, IWrapper* libWrapper, LibSettings
     connectedClients = new std::vector<EndpointInfo*>();
 
 
-    address = SDLNet_ResolveHostname(ip.c_str());
+    address = NET_ResolveHostname(ip.c_str());
     //TODO fix blocking until address is resolved
-    SDLNet_WaitUntilResolved(address, -1);
-    socket = SDLNet_CreateDatagramSocket(address, port);
+    NET_WaitUntilResolved(address, -1);
+    socket = NET_CreateDatagramSocket(address, port, 0);
     if (!socket) {
         printf("Failed to create UDP socket: %s\n", SDL_GetError());
         sender = nullptr;
@@ -174,7 +174,7 @@ void Server::SendMessageTo(NetworkMessageTypes type, std::string message, Endpoi
 Server::~Server()
 {
 	delete sender;
-	SDLNet_DestroyDatagramSocket(socket);
+	NET_DestroyDatagramSocket(socket);
 	for (EndpointInfo* client : *connectedClients) {
 		delete client;
 	}

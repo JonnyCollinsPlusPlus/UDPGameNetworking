@@ -38,19 +38,19 @@ bool NetworkUtilities::IsImportantType(NetworkMessageTypes type)
 		return false;
 	}
 }
-void NetworkUtilities::SendMessageDirect(NetworkMessageTypes messageType, std::string message, SDLNet_DatagramSocket* socket, SDLNet_Address* address, int port)
+void NetworkUtilities::SendMessageDirect(NetworkMessageTypes messageType, std::string message, NET_DatagramSocket* socket, NET_Address* address, int port)
 {
 	//the header of the message as 4 bits in a string
 	std::string messageHeader = PackHeader(messageType);
 	//compresses string of binary into just a string
 	std::vector<Uint8>* compressedMessage = PackMessage(messageHeader + message);
 	//sends the compressed message to the specified port and address
-	SDLNet_SendDatagram(socket, address, port, compressedMessage->data(), compressedMessage->size());
+	NET_SendDatagram(socket, address, port, compressedMessage->data(), compressedMessage->size());
 }
-bool NetworkUtilities::GetNextIncoming(SDLNet_DatagramSocket* socket, NetworkMessage*& message, MessageSender* sender)
+bool NetworkUtilities::GetNextIncoming(NET_DatagramSocket* socket, NetworkMessage*& message, MessageSender* sender)
 {
-	SDLNet_Datagram* incoming = nullptr;
-	int bytesReceived = SDLNet_ReceiveDatagram(socket, &incoming);
+	NET_Datagram* incoming = nullptr;
+	int bytesReceived = NET_ReceiveDatagram(socket, &incoming);
 	if (bytesReceived <= 0) {
 		std::cout << SDL_GetError() << std::endl;
 		std::cout << "If previous error says connection is closed what it really means is that a message was sent to an invalid socket, and that socket returned an error" << std::endl;
@@ -61,7 +61,7 @@ bool NetworkUtilities::GetNextIncoming(SDLNet_DatagramSocket* socket, NetworkMes
 		return false;
 	}
 	NetworkMessage* tempMessage = (new NetworkMessage(incoming));
-	SDLNet_DestroyDatagram(incoming);
+	NET_DestroyDatagram(incoming);
 	if (IsImportantType(tempMessage)) {
 		if (sender != nullptr) {
 			ImportantMessage* returnMsg = sender->ProcessImportantMessage(tempMessage); // this deletes tempMessage
@@ -78,7 +78,7 @@ bool NetworkUtilities::GetNextIncoming(SDLNet_DatagramSocket* socket, NetworkMes
 	return message != nullptr;
 }
 
-void NetworkUtilities::SendMessageTo(NetworkMessageTypes messageType, std::string message, SDLNet_DatagramSocket* socket, SDLNet_Address* address, int port, MessageSender* sender)
+void NetworkUtilities::SendMessageTo(NetworkMessageTypes messageType, std::string message, NET_DatagramSocket* socket, NET_Address* address, int port, MessageSender* sender)
 {
 	if (NetworkUtilities::IsImportantType(messageType)) {
 		sender->SendImportantMessageTo(message, messageType, address, port);

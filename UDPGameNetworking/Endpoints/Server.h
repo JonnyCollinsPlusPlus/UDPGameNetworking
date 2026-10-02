@@ -9,7 +9,7 @@ class UnownedNetworkObject;
 #include "SocketHolder.h"
 class UDPGAMENETWORKING_API Server : public SocketHolder{
 private:
-	SDLNet_Address* address;
+	NET_Address* address;
 	int port;
 	LibSettings* settings;
 

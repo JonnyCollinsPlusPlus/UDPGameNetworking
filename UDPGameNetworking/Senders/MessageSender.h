@@ -27,14 +27,14 @@ private:
 	int updatesUntilResendMessages;
 	int resendMessageRate;
 protected:
-	SDLNet_DatagramSocket* socket;
+	NET_DatagramSocket* socket;
 	std::vector<UnsentMessage*> messages;
 	std::vector<int> receivedMessages;
 	void IncrementNextMessage();
 	int nextMessageID;
-	MessageSender(SDLNet_DatagramSocket* socket);
+	MessageSender(NET_DatagramSocket* socket);
 	void SendImportantMessageTo(std::string message, NetworkMessageTypes type, EndpointInfo* client);
-	void SendMessageDirect(NetworkMessageTypes type, std::string message, SDLNet_DatagramSocket* socket, SDLNet_Address* address, int port);
+	void SendMessageDirect(NetworkMessageTypes type, std::string message, NET_DatagramSocket* socket, NET_Address* address, int port);
 	bool ShouldResendMessages();
 public:
 	virtual void SendUnsentMessages(bool skipCheck);
@@ -49,5 +49,5 @@ public:
 	//	return;
 	//}
 	virtual ImportantMessage* ProcessImportantMessage(NetworkMessage* importantMessage);
-	void SendImportantMessageTo(std::string message, NetworkMessageTypes type, SDLNet_Address* address, int port);
+	void SendImportantMessageTo(std::string message, NetworkMessageTypes type, NET_Address* address, int port);
 };

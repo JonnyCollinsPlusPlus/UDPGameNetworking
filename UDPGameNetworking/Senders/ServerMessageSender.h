@@ -24,7 +24,7 @@ private:
 	std::vector<ClientMessageChecker*> messageCheckers;
 	void SendUnsentBroadcasts();
 public:
-	ServerMessageSender(SDLNet_DatagramSocket* socket, std::vector<EndpointInfo*>* clients);
+	ServerMessageSender(NET_DatagramSocket* socket, std::vector<EndpointInfo*>* clients);
 	void SendImportantMessage(NetworkMessageTypes type, std::string message, EndpointInfo* client);
 	void BroadcastImportantMessage(NetworkMessageTypes type, std::string message);
 

@@ -7,19 +7,19 @@ class NetworkMessage {
 private:
 protected:
 	NetworkMessageTypes messageType;
-	SDLNet_Address* fromAddress;
+	NET_Address* fromAddress;
 	int fromPort;
 	std::string extraData;
 public:
 	NetworkMessage();
-	NetworkMessage(SDLNet_Datagram* datagramToProcess);
+	NetworkMessage(NET_Datagram* datagramToProcess);
 	virtual ~NetworkMessage();
 	virtual std::string Debug();
 	//Gets the extra data, but also includes data that may be trimmed off so that the message can be forwarded unwarped
 	virtual std::string GetDataToForwardMessage();
 	NetworkMessageTypes GetMessageType();
 	std::string GetExtraData();
-	SDLNet_Address* GetAddress();
+	NET_Address* GetAddress();
 	int GetPort();
 	std::string RemoveStateVerification();
 	//IMPORTANT: returned value must be deleted

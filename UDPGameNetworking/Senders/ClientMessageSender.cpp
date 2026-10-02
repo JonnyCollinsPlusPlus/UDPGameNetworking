@@ -1,7 +1,7 @@
 #include "ClientMessageSender.h"
 
 
-ClientMessageSender::ClientMessageSender(SDLNet_DatagramSocket* socket, EndpointInfo* serverInfo) : MessageSender(socket)
+ClientMessageSender::ClientMessageSender(NET_DatagramSocket* socket, EndpointInfo* serverInfo) : MessageSender(socket)
 {
 	server = serverInfo->address;
 	serverPort = serverInfo->port;

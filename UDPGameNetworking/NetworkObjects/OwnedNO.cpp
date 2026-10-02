@@ -1,7 +1,7 @@
 #include "OwnedNO.h"
 #include "../Wrapper/IWrapper.h"
 #include "../Demo/ColourValue.h"
-void OwnedNetworkObject::StreamSend(EndpointInfo* server, SDLNet_DatagramSocket* socket, int clientTime, LibSettings* settings)
+void OwnedNetworkObject::StreamSend(EndpointInfo* server, NET_DatagramSocket* socket, int clientTime, LibSettings* settings)
 {
 	engineObject->UpdateLibraryValues(networkedValues);
 	std::string messageData = NetworkUtilities::AsBinaryString(ID, objectIDDigits);
@@ -10,12 +10,12 @@ void OwnedNetworkObject::StreamSend(EndpointInfo* server, SDLNet_DatagramSocket*
 	NetworkUtilities::SendMessageTo(NetworkedObjectMsg, messageData, socket, server->address, server->port);
 }
 
-void OwnedNetworkObject::SendIDRequest(EndpointInfo* server, SDLNet_DatagramSocket* socket)
+void OwnedNetworkObject::SendIDRequest(EndpointInfo* server, NET_DatagramSocket* socket)
 {
 	NetworkUtilities::SendMessageTo(IDRequest, "", socket, server->address, server->port);
 }
 
-void OwnedNetworkObject::SendInitializationMessage(EndpointInfo* server, SDLNet_DatagramSocket* socket, MessageSender* sender, IWrapper* wrapper)
+void OwnedNetworkObject::SendInitializationMessage(EndpointInfo* server, NET_DatagramSocket* socket, MessageSender* sender, IWrapper* wrapper)
 {
 	//object id then
 	// 8 bits object type
@@ -36,7 +36,7 @@ void OwnedNetworkObject::SendInitializationMessage(EndpointInfo* server, SDLNet_
 	NetworkUtilities::SendMessageTo(NetworkedObjectInit, initInfo, socket, server->address, server->port, sender);
 }
 
-OwnedNetworkObject::OwnedNetworkObject(EndpointInfo* server, SDLNet_DatagramSocket* socket, IEngineObject* engineObj, IWrapper* wrapper)
+OwnedNetworkObject::OwnedNetworkObject(EndpointInfo* server, NET_DatagramSocket* socket, IEngineObject* engineObj, IWrapper* wrapper)
 {
 	//Until the server confirms the ID, the ID will be 0 and object will remain uninitialized
 	initialized = false;
@@ -56,7 +56,7 @@ OwnedNetworkObject::~OwnedNetworkObject()
 	//TODO Send a message to the server notifying of deletion
 }
 
-bool OwnedNetworkObject::IDRequestReceived(int newID, SDLNet_DatagramSocket* socket, EndpointInfo* server, MessageSender* sender, IWrapper* wrapper)
+bool OwnedNetworkObject::IDRequestReceived(int newID, NET_DatagramSocket* socket, EndpointInfo* server, MessageSender* sender, IWrapper* wrapper)
 {
 	if (initialized || ID != 0) {
 		return false;
@@ -68,7 +68,7 @@ bool OwnedNetworkObject::IDRequestReceived(int newID, SDLNet_DatagramSocket* soc
 	return true;
 }
 
-void OwnedNetworkObject::Update(float deltaTime, EndpointInfo* server, SDLNet_DatagramSocket* socket, int clientTime, LibSettings* settings)
+void OwnedNetworkObject::Update(float deltaTime, EndpointInfo* server, NET_DatagramSocket* socket, int clientTime, LibSettings* settings)
 {
 	if (!initialized) {
 		//sometimes messages are lost and server doesnt send an ID confirmation, if so,

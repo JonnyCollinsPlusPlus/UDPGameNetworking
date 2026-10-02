@@ -8,7 +8,7 @@ private:
 	int timerOffset = 0;
 protected:
 	IWrapper* wrapper;
-	SDLNet_DatagramSocket* socket;
+	NET_DatagramSocket* socket;
 	void PollSocket();
 	virtual void ProcessMessage(NetworkMessage* msg) = 0;
 	virtual MessageSender* GetSender() = 0;

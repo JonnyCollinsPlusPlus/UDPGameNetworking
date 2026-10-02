@@ -4,29 +4,16 @@
 cmake_minimum_required(VERSION 3.24)
 project(UDPGameNetworking)
 
-# Include FetchContent module
-include(FetchContent)
+set(EXTERNAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external")
 
-# Enable Hot Reload for MSVC compilers if supported.
-if (POLICY CMP0141)
-  cmake_policy(SET CMP0141 NEW)
-  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
-endif()
-
-# Fetch SDL3 and SDL3_net from official repositories
-FetchContent_Declare(
-    SDL3
-    GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-    GIT_TAG        release-3.2.6
+find_package(SDL3 REQUIRED CONFIG
+    PATHS "${EXTERNAL_DIR}/SDL3"
+    NO_DEFAULT_PATH
 )
-FetchContent_MakeAvailable(SDL3)
-
-FetchContent_Declare(
-    SDL3_net
-    GIT_REPOSITORY https://github.com/libsdl-org/SDL_net.git
-    GIT_TAG        main
+find_package(SDL3_net REQUIRED CONFIG
+    PATHS "${EXTERNAL_DIR}/SDL3_net"
+    NO_DEFAULT_PATH
 )
-FetchContent_MakeAvailable(SDL3_net)
 
 set(LIBRARY_SOURCES
     UDPGameNetworking/NetworkUtilities.cpp

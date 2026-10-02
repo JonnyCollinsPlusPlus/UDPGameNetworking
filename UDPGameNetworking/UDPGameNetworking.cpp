@@ -9,7 +9,7 @@
 // - Threading for server polling
 int main()
 {
-	if (!SDLNet_Init()) {
+	if (!NET_Init()) {
 		return 0;
 	}
 	Demo* demo = new Demo();
@@ -18,7 +18,7 @@ int main()
 		demo->Update();
 	}
 	demo->Close();
-	SDLNet_Quit();
+	NET_Quit();
 	return 0;
 }
 

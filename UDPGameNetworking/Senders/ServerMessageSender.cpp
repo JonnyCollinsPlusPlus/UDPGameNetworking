@@ -11,7 +11,7 @@ void ServerMessageSender::SendImportantMessage(NetworkMessageTypes type, std::st
 {
 	MessageSender::SendImportantMessageTo(message, type, client);
 }
-ServerMessageSender::ServerMessageSender(SDLNet_DatagramSocket* socket, std::vector<EndpointInfo*>* connectedClients) : MessageSender(socket)
+ServerMessageSender::ServerMessageSender(NET_DatagramSocket* socket, std::vector<EndpointInfo*>* connectedClients) : MessageSender(socket)
 {
 	clients = std::vector<EndpointInfo*>(*connectedClients);
 }
@@ -40,23 +40,23 @@ void ServerMessageSender::NewClientConnected(EndpointInfo* client)
 void ServerMessageSender::ClientDisconnected(EndpointInfo* client)
 {
 	messageCheckers.erase(remove_if(messageCheckers.begin(), messageCheckers.end(),
-		[client](ClientMessageChecker* disconnector) {return (SDLNet_GetAddressString(disconnector->client->address) == SDLNet_GetAddressString(client->address) && disconnector->client->port == client->port); }),
+		[client](ClientMessageChecker* disconnector) {return (NET_GetAddressString(disconnector->client->address) == NET_GetAddressString(client->address) && disconnector->client->port == client->port); }),
 		messageCheckers.end());
 	clients.erase(remove_if(clients.begin(), clients.end(),
-		[client](EndpointInfo* disconnector) {return (SDLNet_GetAddressString(disconnector->address) == SDLNet_GetAddressString(client->address) && disconnector->port == client->port); }),
+		[client](EndpointInfo* disconnector) {return (NET_GetAddressString(disconnector->address) == NET_GetAddressString(client->address) && disconnector->port == client->port); }),
 		clients.end());
 }
 
 ImportantMessage* ServerMessageSender::ProcessImportantMessage(NetworkMessage* importantMessage)
 {
 	//send the confirmation regardless of wether or not the message is new
-	SDLNet_Address* address = importantMessage->GetAddress();
+	NET_Address* address = importantMessage->GetAddress();
 	int port = importantMessage->GetPort();
 	NetworkUtilities::SendMessageTo(ImportantMessageConfirmation, importantMessage->GetDataToForwardMessage(), socket, address, port);
 	//find the relevant message checker
 
 	for (ClientMessageChecker* c : messageCheckers) {
-		if (SDLNet_GetAddressString(c->client->address) == SDLNet_GetAddressString(importantMessage->GetAddress()) && c->client->port == importantMessage->GetPort()) {
+		if (NET_GetAddressString(c->client->address) == NET_GetAddressString(importantMessage->GetAddress()) && c->client->port == importantMessage->GetPort()) {
 			//check if the message checker contains the message and if so return the new message
 			//construct an important message to read the message id
 			ImportantMessage* message = new ImportantMessage(importantMessage);

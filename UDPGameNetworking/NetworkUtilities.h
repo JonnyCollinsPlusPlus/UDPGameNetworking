@@ -35,7 +35,7 @@ private:
 	// all messages received of these type will trigger an important message response
 	static bool IsImportantType(NetworkMessage* message);
 	static bool IsImportantType(NetworkMessageTypes type);
-	static void SendMessageDirect(NetworkMessageTypes messageType, std::string message, SDLNet_DatagramSocket* socket, SDLNet_Address* address, int port);
+	static void SendMessageDirect(NetworkMessageTypes messageType, std::string message, NET_DatagramSocket* socket, NET_Address* address, int port);
 public:
 	//Gets the next incoming message on the socket
 	//Implementation should look something like this:
@@ -47,7 +47,7 @@ public:
 	// @param message - the message pointer to populate with a new message
 	// @param sender - the message sender to process important messages with, default is nullptr
 	// @return bool if there were any new message*/
-	static bool GetNextIncoming(SDLNet_DatagramSocket* socket, NetworkMessage*& message, MessageSender* sender = nullptr);
+	static bool GetNextIncoming(NET_DatagramSocket* socket, NetworkMessage*& message, MessageSender* sender = nullptr);
 	//Sends a message over UDP
 	// @param messageType - the header of the message, note that this determines if message is important or not
 	// @param message - the message data to send, note that this must be binary only
@@ -55,7 +55,7 @@ public:
 	// @param address - the address to send the message to
 	// @param port - the port to send the message to on the specified address
 	// @param sender - the message sender to send important messages with, default is nullptr
-	static void SendMessageTo(NetworkMessageTypes messageType, std::string message, SDLNet_DatagramSocket* socket, SDLNet_Address* address, int port, MessageSender* sender = nullptr);
+	static void SendMessageTo(NetworkMessageTypes messageType, std::string message, NET_DatagramSocket* socket, NET_Address* address, int port, MessageSender* sender = nullptr);
 	//Verify that a string contains only '1' and '0' characters
 	// @param message - string to query
 	// @return bool wether or not the string was comprised of only 1s and 0s

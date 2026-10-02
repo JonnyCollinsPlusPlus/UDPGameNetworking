@@ -149,7 +149,7 @@ Client::~Client()
 
 	delete sender;
 	delete serverInfo;
-	SDLNet_DestroyDatagramSocket(socket);
+	NET_DestroyDatagramSocket(socket);
 }
 
 void Client::ConnectToServer(std::string address)
@@ -159,7 +159,7 @@ void Client::ConnectToServer(std::string address)
 		std::cout << "Already connected to a server!" << std::endl;
 	}
 	serverInfo = new EndpointInfo(address, 55533);
-	socket = SDLNet_CreateDatagramSocket(serverInfo->address, port);
+	socket = NET_CreateDatagramSocket(serverInfo->address, port, 0);
 
 	if (!socket) {
 		std::cout << "Invalid socket" << SDL_GetError() << std::endl;
@@ -174,7 +174,7 @@ void Client::Disconnect()
 	delete sender;
 	sender = nullptr;
 	delete serverInfo;
-	SDLNet_DestroyDatagramSocket(socket);
+	NET_DestroyDatagramSocket(socket);
 	socket = nullptr;
 }
 

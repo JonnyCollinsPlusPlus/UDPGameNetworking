@@ -1,6 +1,6 @@
 #include "MessageSender.h"
 
-void MessageSender::SendMessageDirect(NetworkMessageTypes type, std::string message, SDLNet_DatagramSocket* socket, SDLNet_Address* address, int port)
+void MessageSender::SendMessageDirect(NetworkMessageTypes type, std::string message, NET_DatagramSocket* socket, NET_Address* address, int port)
 {
 	NetworkUtilities::SendMessageDirect(type, message, socket, address, port);
 }
@@ -13,7 +13,7 @@ void MessageSender::IncrementNextMessage()
 	}
 }
 
-MessageSender::MessageSender(SDLNet_DatagramSocket* pSocket)
+MessageSender::MessageSender(NET_DatagramSocket* pSocket)
 {
 	socket = pSocket;
 	nextMessageID = 1;
@@ -21,7 +21,7 @@ MessageSender::MessageSender(SDLNet_DatagramSocket* pSocket)
 	resendMessageRate = 100;
 }
 
-void MessageSender::SendImportantMessageTo(std::string message, NetworkMessageTypes type, SDLNet_Address* address, int port)
+void MessageSender::SendImportantMessageTo(std::string message, NetworkMessageTypes type, NET_Address* address, int port)
 {
 	UnsentMessage* msg = new UnsentMessage(message, new EndpointInfo(address, port), nextMessageID, type);
 	messages.push_back(msg);
@@ -67,7 +67,7 @@ void MessageSender::ConfirmationRecieved(NetworkMessage* confirmationMessage)
 ImportantMessage* MessageSender::ProcessImportantMessage(NetworkMessage* importantMessage)
 {
 	//send the confirmation regardless of wether or not the message is new
-	SDLNet_Address* address = importantMessage->GetAddress();
+	NET_Address* address = importantMessage->GetAddress();
 	int port = importantMessage->GetPort();
 	NetworkUtilities::SendMessageTo(ImportantMessageConfirmation, importantMessage->GetExtraData(), socket, address, port);
 	//check if the message is new, and if so, register it and return true
