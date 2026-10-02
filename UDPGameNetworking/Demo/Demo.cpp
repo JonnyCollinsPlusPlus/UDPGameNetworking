@@ -1,6 +1,10 @@
 #include "Demo.h"
 #include "DemoColourSquare.h"
 #include "../CustomStreaming/PositionLerp2D.h"
+
+#include <imgui.h>
+#include <imgui_impl_sdl3.h>
+#include <imgui_impl_sdlrenderer3.h>
 DemoClient::DemoClient(bool server, int port, int lerpDelay, bool lerpEnabled)
 {
 	isServer = server;
@@ -22,6 +26,9 @@ DemoClient::~DemoClient()
 
 void DemoClient::Start()
 {
+
+
+
 	wrapper->Initialize();
 	if (isServer) {
 		wrapper->StartServer();
@@ -62,9 +69,23 @@ void DemoClient::HandleInput(SDL_Event& e)
 
 Demo::Demo()
 {
+	guiWindow = SDL_CreateWindow("UDP Game Networking Demo client", 500, 500, 0);
+	guiRenderer = SDL_CreateRenderer(guiWindow, NULL);
+
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	ImGui::StyleColorsDark();
+
+	// 2. Init Backends (after SDL Window & Renderer creation)
+	ImGui_ImplSDL3_InitForSDLRenderer(guiWindow, guiRenderer);
+	ImGui_ImplSDLRenderer3_Init(guiRenderer);
+
 	//2 clients each with a different port, 100ms lerp delay, and lerping enabled
 	client1 = new DemoClient(true, 55511, 100, true);
 	client2 = new DemoClient(false, 55522, 100, true);
+
+
 }
 
 Demo::~Demo()
@@ -81,18 +102,42 @@ void Demo::Start()
 
 void Demo::Update()
 {
-	client1->Update();
-	client2->Update();
-
+	
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
+		ImGui_ImplSDL3_ProcessEvent(&e);
+
 		client1->HandleInput(e);
 		client2->HandleInput(e);
 	}
+	ImGui_ImplSDLRenderer3_NewFrame();
+	ImGui_ImplSDL3_NewFrame();
+	ImGui::NewFrame();
+
+	ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(200, 100), ImGuiCond_FirstUseEver);
+    ImGui::Begin("Debug Panel");
+    ImGui::Text("Network status: OK");
+    ImGui::End();
+
+	ImGui::Render();
+	SDL_SetRenderDrawColor(guiRenderer, 40, 40, 40, 255);
+    SDL_RenderClear(guiRenderer);
+
+	ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), guiRenderer);
+
+	SDL_RenderPresent(guiRenderer);
+	
+	client1->Update();
+	client2->Update();
 }
 
 void Demo::Close()
 {
+	ImGui_ImplSDLRenderer3_Shutdown();
+	ImGui_ImplSDL3_Shutdown();
+	ImGui::DestroyContext();
+
 	client1->Close();
 	client2->Close();
 }

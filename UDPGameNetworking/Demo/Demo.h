@@ -41,6 +41,8 @@ class Demo {
 private:
 	DemoClient* client1;
 	DemoClient* client2;
+	SDL_Window* guiWindow;
+	SDL_Renderer* guiRenderer;
 protected:
 public:
 	Demo();

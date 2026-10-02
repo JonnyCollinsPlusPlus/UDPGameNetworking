@@ -9,6 +9,8 @@
 // - Threading for server polling
 int main()
 {
+
+
 	if (!NET_Init()) {
 		return 0;
 	}
