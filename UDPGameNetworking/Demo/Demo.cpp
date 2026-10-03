@@ -81,6 +81,8 @@ Demo::~Demo()
 
 void Demo::Start()
 {
+	gui = new DemoGUI();
+	gui->Initialize();
 	client1->Start();
 	client2->Start();
 }
@@ -90,19 +92,18 @@ void Demo::Update()
 	
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
-		ImGui_ImplSDL3_ProcessEvent(&e);
-
+		gui->HandleEvent(e);
 		client1->HandleInput(e);
 		client2->HandleInput(e);
 	}
-	
+	gui->Update();
 	client1->Update();
 	client2->Update();
 }
 
 void Demo::Close()
 {
-
+	gui->Close();
 	client1->Close();
 	client2->Close();
 }

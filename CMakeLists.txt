@@ -41,6 +41,7 @@ set(DEMO_SOURCES
     UDPGameNetworking/Demo/DemoCallback.cpp
     UDPGameNetworking/Demo/DemoColourSquare.cpp
     UDPGameNetworking/Demo/ColourValue.cpp
+    UDPGameNetworking/Demo/Gui/DemoGUI.cpp
 )
 # Define ImGui as a static library target
 add_library(imgui STATIC

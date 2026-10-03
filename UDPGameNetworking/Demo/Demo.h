@@ -1,6 +1,7 @@
 #pragma once
 #include "DemoWrapper.h"
 #include "../Wrapper/IEngineObject.h"
+#include "Gui/DemoGUI.h"
 class DemoPlayer : public IEngineObject {
 private:
 protected:
@@ -41,8 +42,7 @@ class Demo {
 private:
 	DemoClient* client1;
 	DemoClient* client2;
-	SDL_Window* guiWindow;
-	SDL_Renderer* guiRenderer;
+	DemoGUI* gui;
 protected:
 public:
 	Demo();

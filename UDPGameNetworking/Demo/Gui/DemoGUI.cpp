@@ -1,7 +1,7 @@
 #include "DemoGui.h"
 
 
-void Initialize()
+void DemoGUI::Initialize()
 {
     guiWindow = SDL_CreateWindow("UDP Game Networking Demo client", 500, 500, 0);
 	guiRenderer = SDL_CreateRenderer(guiWindow, NULL);
@@ -16,7 +16,7 @@ void Initialize()
 	ImGui_ImplSDLRenderer3_Init(guiRenderer);
 }
 
-void Update()
+void DemoGUI::Update()
 {
     ImGui_ImplSDLRenderer3_NewFrame();
 	ImGui_ImplSDL3_NewFrame();
@@ -37,9 +37,14 @@ void Update()
 	SDL_RenderPresent(guiRenderer);
 }
 
-void Close()
+void DemoGUI::Close()
 {
     ImGui_ImplSDLRenderer3_Shutdown();
 	ImGui_ImplSDL3_Shutdown();
 	ImGui::DestroyContext();
+}
+
+void DemoGUI::HandleEvent(SDL_Event& e){
+	ImGui_ImplSDL3_ProcessEvent(&e);
+
 }
