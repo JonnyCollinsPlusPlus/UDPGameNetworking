@@ -3,13 +3,20 @@
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_sdlrenderer3.h>
 #include <SDL3/SDL.h>
+class Demo;
 class DemoGUI{
 private:
 	SDL_Window* guiWindow;
 	SDL_Renderer* guiRenderer;
+    int packetLossValue;
+    bool client1Lerp;
+    int client1LerpDelay;
+    bool client2Lerp;
+    int client2LerpDelay;
+    Demo* owner;
 protected:
 public:
-    void Initialize();
+    void Initialize(Demo* demo);
     void Update();
     void Close();
     void HandleEvent(SDL_Event& e);

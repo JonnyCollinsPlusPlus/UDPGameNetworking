@@ -57,8 +57,10 @@ void DemoWrapper::StartServer()
 	server = new Server("127.0.0.1", 55533, this, settings);
 }
 
-void DemoWrapper::ApplySettings()
+void DemoWrapper::ApplySettings(LibSettings* s)
 {
+	*settings = *s;
+	std::cout << "Settings updated!, enabled: " << settings->lerpEnabled << " delay: " << settings->lerpDelay << std::endl;
 }
 
 void DemoWrapper::InvokeRegisteredCallback(int callbackID, std::string optionalExtraData)
@@ -163,4 +165,8 @@ void DemoWrapper::CallbackTest()
 int DemoWrapper::GetClientTime()
 {
 	return client->GetTime();;
+}
+
+void DemoWrapper::SetPacketLoss(int lossRate){
+	client->SetSimulatedPacketLoss(lossRate);
 }

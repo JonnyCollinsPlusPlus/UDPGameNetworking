@@ -62,15 +62,17 @@ void DemoClient::HandleInput(SDL_Event& e)
 		colourSquare->HandleInput(e);
 	}
 }
-
+void DemoClient::SetPacketLoss(int lossRate){
+	wrapper->SetPacketLoss(lossRate);
+}
+void DemoClient::ApplySettings(LibSettings* s){
+	wrapper->ApplySettings(s);
+}
 Demo::Demo()
 {
-
 	//2 clients each with a different port, 100ms lerp delay, and lerping enabled
 	client1 = new DemoClient(true, 55511, 100, true);
 	client2 = new DemoClient(false, 55522, 100, true);
-
-
 }
 
 Demo::~Demo()
@@ -82,7 +84,7 @@ Demo::~Demo()
 void Demo::Start()
 {
 	gui = new DemoGUI();
-	gui->Initialize();
+	gui->Initialize(this);
 	client1->Start();
 	client2->Start();
 }
@@ -112,6 +114,26 @@ bool Demo::Done()
 {
 	return false;
 }
+
+void Demo::SetPacketLoss(int lossRate){
+	client1->SetPacketLoss(lossRate);
+}
+
+void Demo::ApplyClient1Settings(bool lerpEnabled, int lerpDelay){
+	LibSettings* s = new LibSettings();
+	s->lerpDelay = lerpDelay;
+	s->lerpEnabled = lerpEnabled;
+	client1->ApplySettings(s);
+	delete s;
+}
+void Demo::ApplyClient2Settings(bool lerpEnabled, int lerpDelay){
+	LibSettings* s = new LibSettings();
+	s->lerpDelay = lerpDelay;
+	s->lerpEnabled = lerpEnabled;
+	client2->ApplySettings(s);
+	delete s;
+}
+
 
 DemoPlayer::DemoPlayer(DemoWrapper* libWrapper)
 {
@@ -168,3 +190,4 @@ void DemoPlayer::UpdateEngineValues(std::vector<INetworkedValue*>* values, LibSe
 	y = p->y;
 	delete p;
 }
+

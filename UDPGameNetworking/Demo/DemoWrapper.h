@@ -24,13 +24,14 @@ public:
 	virtual void RegisterCallback(int ID) override;
 	virtual void StartClient() override;
 	virtual void StartServer() override;
-	virtual void ApplySettings() override;
+	virtual void ApplySettings(LibSettings* s) override;
 	virtual void InvokeRegisteredCallback(int callbackID, std::string optionalExtraData) override;
 	virtual IEngineObject* NewNetworkedObject(int objectType, bool belongsToClient) override;
 	virtual INetworkedValue* NewNetworkedValue(int valueID, int valueType) override;
 	virtual std::string NetworkedValueMetadata(INetworkedValue* value) override;
 	virtual int EngineObjectMetadata(IEngineObject* obj) override;
 	virtual std::vector<INetworkedValue*>* ObjectInitialValues(IEngineObject* obj) override;
+	void SetPacketLoss(int lossRate);
 
 
 

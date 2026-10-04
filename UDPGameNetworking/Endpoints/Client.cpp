@@ -214,3 +214,8 @@ void Client::RegisterObject(IEngineObject* obj)
 	OwnedNetworkObject* ono = new OwnedNetworkObject(serverInfo, socket, obj, wrapper);
 	ownedObjects->push_back(ono);
 }
+
+void Client::SetSimulatedPacketLoss(int lossRate){
+	NET_SimulateDatagramPacketLoss(socket, lossRate);
+	std::cout << "Simulate Datagram Packet Loss Rate set to" << lossRate << std::endl;
+}

@@ -47,4 +47,6 @@ public:
 	void SendServerMessage(NetworkMessageTypes type, std::string msg);
 
 	void RegisterObject(IEngineObject* obj);
+
+	void SetSimulatedPacketLoss(int lossRate);
 };

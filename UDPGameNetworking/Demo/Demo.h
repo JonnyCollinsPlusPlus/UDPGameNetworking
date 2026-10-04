@@ -37,6 +37,8 @@ public:
 	void Close();
 
 	void HandleInput(SDL_Event& e);
+	void SetPacketLoss(int lossRate);
+	void ApplySettings(LibSettings* s);
 };
 class Demo {
 private:
@@ -52,4 +54,8 @@ public:
 	void Close();
 
 	bool Done();
+
+	void SetPacketLoss(int lossRate);
+	void ApplyClient1Settings(bool lerpEnabled, int lerpDelay);
+	void ApplyClient2Settings(bool lerpEnabled, int lerpDelay);
 };
