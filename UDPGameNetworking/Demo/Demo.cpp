@@ -1,6 +1,7 @@
 #include "Demo.h"
 #include "DemoColourSquare.h"
 #include "../CustomStreaming/PositionLerp2D.h"
+#include <string>
 DemoClient::DemoClient(bool server, int port, int lerpDelay, bool lerpEnabled)
 {
 	isServer = server;
@@ -20,7 +21,7 @@ DemoClient::~DemoClient()
 	SDL_DestroyRenderer(renderer);
 }
 
-void DemoClient::Start()
+void DemoClient::Start(int clientNum)
 {
 
 
@@ -34,8 +35,11 @@ void DemoClient::Start()
 	wrapper->RegisterObject(colourSquare);
 	wrapper->RegisterCallback(500);
 	started = true;
-	window = SDL_CreateWindow("UDP Game Networking Demo client", 500, 500, 0);
+	std::string windowName = "Client " + std::to_string(clientNum);
+	window = SDL_CreateWindow(windowName.c_str(), 500, 500, 0);
 	renderer = SDL_CreateRenderer(window, NULL);
+	SDL_SetWindowPosition(window, (clientNum * 500) + 100, 100);
+
 }
 
 void DemoClient::Update()
@@ -85,8 +89,8 @@ void Demo::Start()
 {
 	gui = new DemoGUI();
 	gui->Initialize(this);
-	client1->Start();
-	client2->Start();
+	client1->Start(1);
+	client2->Start(2);
 }
 
 void Demo::Update()

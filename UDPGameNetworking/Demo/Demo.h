@@ -32,7 +32,7 @@ protected:
 public:
 	DemoClient(bool isServer, int port, int lerpDelay, bool lerpEnabled);
 	~DemoClient();
-	void Start();
+	void Start(int clientNum);
 	void Update();
 	void Close();
 
