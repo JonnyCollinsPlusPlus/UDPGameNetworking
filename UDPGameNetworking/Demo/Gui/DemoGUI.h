@@ -10,8 +10,10 @@ private:
 	SDL_Renderer* guiRenderer;
     int packetLossValue;
     bool client1Lerp;
+    bool client1Ghost;
     int client1LerpDelay;
     bool client2Lerp;
+    bool client2Ghost;
     int client2LerpDelay;
     Demo* owner;
 protected:

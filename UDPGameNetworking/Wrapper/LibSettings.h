@@ -7,4 +7,5 @@ protected:
 public:
 	int lerpDelay;
 	bool lerpEnabled;
+	bool ghostEnabled;
 };

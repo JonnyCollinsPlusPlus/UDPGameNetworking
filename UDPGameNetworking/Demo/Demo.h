@@ -59,6 +59,6 @@ public:
 	bool Done();
 
 	void SetPacketLoss(int lossRate);
-	void ApplyClient1Settings(bool lerpEnabled, int lerpDelay);
-	void ApplyClient2Settings(bool lerpEnabled, int lerpDelay);
+	void ApplyClient1Settings(bool lerpEnabled, bool ghostEnabled, int lerpDelay);
+	void ApplyClient2Settings(bool lerpEnabled, bool ghostEnabled, int lerpDelay);
 };

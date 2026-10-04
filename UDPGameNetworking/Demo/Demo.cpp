@@ -124,16 +124,18 @@ void Demo::SetPacketLoss(int lossRate){
 	client1->SetPacketLoss(lossRate);
 }
 
-void Demo::ApplyClient1Settings(bool lerpEnabled, int lerpDelay){
+void Demo::ApplyClient1Settings(bool lerpEnabled, bool ghostEnabled, int lerpDelay){
 	LibSettings* s = new LibSettings();
 	s->lerpDelay = lerpDelay;
+	s->ghostEnabled = ghostEnabled;
 	s->lerpEnabled = lerpEnabled;
 	client1->ApplySettings(s);
 	delete s;
 }
-void Demo::ApplyClient2Settings(bool lerpEnabled, int lerpDelay){
+void Demo::ApplyClient2Settings(bool lerpEnabled, bool ghostEnabled, int lerpDelay){
 	LibSettings* s = new LibSettings();
 	s->lerpDelay = lerpDelay;
+	s->ghostEnabled = ghostEnabled;
 	s->lerpEnabled = lerpEnabled;
 	client2->ApplySettings(s);
 	delete s;

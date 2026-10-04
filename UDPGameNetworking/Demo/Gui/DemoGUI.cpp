@@ -2,7 +2,7 @@
 #include "../Demo.h"
 
 //returns true if anything in this section changed
-static bool ClientLerpSection(const char* title, bool& lerpEnabled, int& delayMs)
+static bool ClientLerpSection(const char* title, bool& lerpEnabled, bool& ghostEnabled, int& delayMs)
 {
 	bool changed = false;
 
@@ -12,6 +12,7 @@ static bool ClientLerpSection(const char* title, bool& lerpEnabled, int& delayMs
 	changed |= ImGui::Checkbox("Enable lerp", &lerpEnabled);
 
 	ImGui::BeginDisabled(!lerpEnabled);
+	changed |= ImGui::Checkbox("Enable lerp ghost", &ghostEnabled);
 	ImGui::TextUnformatted("Delay (ms)");
 	ImGui::SetNextItemWidth(-FLT_MIN);  
 	changed |= ImGui::SliderInt("##delay", &delayMs, 0, 500, "%d ms");
@@ -97,13 +98,13 @@ void DemoGUI::Update()
 		owner->SetPacketLoss(packetLossValue);
 	}
 
-	if (ClientLerpSection("Client 1", client1Lerp, client1LerpDelay))
+	if (ClientLerpSection("Client 1", client1Lerp, client1Ghost, client1LerpDelay))
 	{
-		owner->ApplyClient1Settings(client1Lerp, client1LerpDelay);
+		owner->ApplyClient1Settings(client1Lerp, client1Ghost, client1LerpDelay);
 	}
-	if (ClientLerpSection("Client 2", client2Lerp, client2LerpDelay))
+	if (ClientLerpSection("Client 2", client2Lerp, client2Ghost, client2LerpDelay))
 	{
-		owner->ApplyClient2Settings(client2Lerp, client2LerpDelay);
+		owner->ApplyClient2Settings(client2Lerp, client2Ghost, client2LerpDelay);
 	}
 
 	ImGui::End();
