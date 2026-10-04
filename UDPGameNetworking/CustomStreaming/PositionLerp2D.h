@@ -53,4 +53,6 @@ public:
 	virtual Position* GetCurrentValue(int currentTime, LibSettings* settings) override;
 
 	virtual std::string GetMetadata() override;
+
+	Position* GetMostRecentValue(); //For rendering in demo
 };

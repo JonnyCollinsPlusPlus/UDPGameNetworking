@@ -8,6 +8,8 @@ protected:
 	DemoWrapper* wrapper;
 	int x;
 	int y;
+	int ghostX;
+	int ghostY;
 public:
 	DemoPlayer(DemoWrapper* wrapper);
 	~DemoPlayer();
@@ -15,6 +17,7 @@ public:
 	void Update(float deltaTime);
 
 	SDL_FRect GetRect();
+	SDL_FRect GetGhostRect();
 
 	virtual void UpdateLibraryValues(std::vector<INetworkedValue*>* values) override;
 	virtual void UpdateEngineValues(std::vector<INetworkedValue*>* values, LibSettings* settings) override;
@@ -33,7 +36,7 @@ public:
 	DemoClient(bool isServer, int port, int lerpDelay, bool lerpEnabled);
 	~DemoClient();
 	void Start(int clientNum);
-	void Update();
+	void Update(float deltaTime);
 	void Close();
 
 	void HandleInput(SDL_Event& e);
@@ -50,7 +53,7 @@ public:
 	Demo();
 	~Demo();
 	void Start();
-	void Update();
+	void Update(float deltaTime);
 	void Close();
 
 	bool Done();

@@ -100,6 +100,11 @@ void PositionLerp2D::UpdateValue(int xVal, int yVal)
 	y = yVal;
 }
 
+Position* PositionLerp2D::GetMostRecentValue(){
+    PositionDataPoint* pdp = dataBuffer->back();
+    return new Position(pdp->x,pdp->y);
+}
+
 std::string PositionLerp2D::Debug()
 {
 	return "position lerp with x: " + std::to_string(x) + " and y: " + std::to_string(y);

@@ -150,6 +150,11 @@ void DemoWrapper::DrawOtherPlayers(SDL_Renderer* renderer)
 	SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
 	for (DemoPlayer* dp : *otherPlayers) {
 		const SDL_FRect rect = dp->GetRect();
+		SDL_RenderFillRect(renderer, &rect);
+	}
+	SDL_SetRenderDrawColor(renderer, 100, 205, 100, 255);
+	for (DemoPlayer* dp : *otherPlayers) {
+		const SDL_FRect rect = dp->GetGhostRect();
 		SDL_RenderRect(renderer, &rect);
 	}
 	for (DemoColourSquare* dcs : *otherSquares) {

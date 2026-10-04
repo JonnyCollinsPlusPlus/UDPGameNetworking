@@ -42,17 +42,17 @@ void DemoClient::Start(int clientNum)
 
 }
 
-void DemoClient::Update()
+void DemoClient::Update(float deltaTime)
 {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 	SDL_RenderFillRect(renderer, NULL);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 0, 0);
 	const SDL_FRect rect = clientPlayer->GetRect();
-	SDL_RenderRect(renderer, &rect);
+	SDL_RenderFillRect(renderer, &rect);
 	wrapper->DrawOtherPlayers(renderer);
 	colourSquare->Render(renderer);
 	SDL_RenderPresent(renderer);
-	wrapper->Update(1);
+	wrapper->Update(deltaTime);
 }
 void DemoClient::Close()
 {
@@ -93,7 +93,7 @@ void Demo::Start()
 	client2->Start(2);
 }
 
-void Demo::Update()
+void Demo::Update(float deltaTime)
 {
 	
 	SDL_Event e;
@@ -103,8 +103,9 @@ void Demo::Update()
 		client2->HandleInput(e);
 	}
 	gui->Update();
-	client1->Update();
-	client2->Update();
+	//inside clients deltaTime is in ms
+	client1->Update(deltaTime * 1000);
+	client2->Update(deltaTime * 1000);
 }
 
 void Demo::Close()
@@ -181,6 +182,9 @@ SDL_FRect DemoPlayer::GetRect()
 {
 	return SDL_FRect{ (float)x, (float)y, 20, 20 };
 }
+SDL_FRect DemoPlayer::GetGhostRect(){
+	return SDL_FRect{ (float)ghostX, (float)ghostY, 20, 20};
+}
 
 void DemoPlayer::UpdateLibraryValues(std::vector<INetworkedValue*>* values)
 {
@@ -193,5 +197,11 @@ void DemoPlayer::UpdateEngineValues(std::vector<INetworkedValue*>* values, LibSe
 	x = p->x;
 	y = p->y;
 	delete p;
+
+
+	Position* gp =  ((PositionLerp2D*)values->at(0))->GetMostRecentValue();
+	ghostX = gp->x;
+	ghostY = gp->y;
+	delete gp;
 }
 

@@ -16,8 +16,12 @@ int main()
 	}
 	Demo* demo = new Demo();
 	demo->Start();
+	Uint64 last = SDL_GetTicksNS();
 	while (!demo->Done()) {
-		demo->Update();
+		Uint64 now = SDL_GetTicksNS();
+		float deltaTime = (now-last) / 1'000'000'000.0f;
+		last = now;
+		demo->Update(deltaTime);
 	}
 	demo->Close();
 	NET_Quit();
