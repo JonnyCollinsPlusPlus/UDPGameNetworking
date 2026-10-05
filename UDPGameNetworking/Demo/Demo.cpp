@@ -158,22 +158,22 @@ void DemoPlayer::HandleInput(SDL_Event& e)
 	switch (e.type) {
 	case SDL_EVENT_KEY_DOWN:
 		if (e.key.key == SDLK_A) {
-			x -= 5;
+			x -= 3;
 		}
 		if (e.key.key == SDLK_D) {
-			x += 5;
+			x += 3;
 		}
 		if (e.key.key == SDLK_W) {
-			y -= 5;
+			y -= 3;
 		}
 		if (e.key.key == SDLK_S) {
-			y += 5;
+			y += 3;
 		}
 		if (e.key.key == SDLK_M) {
 			wrapper->CallbackTest();
 		}
-		if (x > 512) {x = 512;}
-		if (y > 512) {y = 512;}
+		if (x > 492) {x = 492;}
+		if (y > 492) {y = 492;}
 		if (x < 0) {x = 0;}
 		if (y < 0) {y = 0;}
 	}
