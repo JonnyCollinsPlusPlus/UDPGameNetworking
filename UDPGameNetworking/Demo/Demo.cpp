@@ -172,6 +172,10 @@ void DemoPlayer::HandleInput(SDL_Event& e)
 		if (e.key.key == SDLK_M) {
 			wrapper->CallbackTest();
 		}
+		if (x > 512) {x = 512;}
+		if (y > 512) {y = 512;}
+		if (x < 0) {x = 0;}
+		if (y < 0) {y = 0;}
 	}
 }
 
