@@ -2,21 +2,21 @@
 #include "../NetworkUtilities.h"
 int PositionLerp2D::clampToScreenSize(int clampVal)
 {
-    int screenSize = 256;
+    int screenSize = 512;
     return ((clampVal % screenSize) + screenSize) % screenSize;
 }
 Position* PositionLerp2D::Deserialize(std::string data)
 {
-    if (data.size() != 56) return nullptr;
-    int xIn = NetworkUtilities::IntFromBinaryString(data.substr(0, 28), 7);
-    int yIn = NetworkUtilities::IntFromBinaryString(data.substr(28, 28), 7);
+    if (data.size() != GetPacketPayloadLength()) return nullptr;
+    int xIn = NetworkUtilities::IntFromBinaryString(data.substr(0, 32), 8);
+    int yIn = NetworkUtilities::IntFromBinaryString(data.substr(32, 32), 8);
     return new Position(xIn, yIn);
 }
 std::string PositionLerp2D::Serialize(Position*)
 {
     std::string streamData = "";
-    streamData.append(NetworkUtilities::AsBinaryString(GetX(), 7));
-    streamData.append(NetworkUtilities::AsBinaryString(GetY(), 7));
+    streamData.append(NetworkUtilities::AsBinaryString(GetX(), 8));
+    streamData.append(NetworkUtilities::AsBinaryString(GetY(), 8));
     return streamData;
 }
 Position* PositionLerp2D::GetCurrentValue(int currentTime, LibSettings* settings)
@@ -91,7 +91,7 @@ bool PositionLerp2D::StreamReceived(std::string streamData, int time)
 
 int PositionLerp2D::GetPacketPayloadLength()
 {
-    return 56;
+    return 64;
 }
 
 void PositionLerp2D::UpdateValue(int xVal, int yVal)
