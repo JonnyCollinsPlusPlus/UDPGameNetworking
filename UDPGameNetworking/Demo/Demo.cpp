@@ -36,9 +36,9 @@ void DemoClient::Start(int clientNum)
 	wrapper->RegisterCallback(500);
 	started = true;
 	std::string windowName = "Client " + std::to_string(clientNum);
-	window = SDL_CreateWindow(windowName.c_str(), 500, 500, 0);
+	window = SDL_CreateWindow(windowName.c_str(), 512, 512, 0);
 	renderer = SDL_CreateRenderer(window, NULL);
-	SDL_SetWindowPosition(window, (clientNum * 500) + 100, 100);
+	SDL_SetWindowPosition(window, (clientNum * 512) + 100, 100);
 
 }
 
