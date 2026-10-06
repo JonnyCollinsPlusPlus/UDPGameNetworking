@@ -11,7 +11,7 @@ void ServerMessageSender::SendImportantMessage(NetworkMessageTypes type, std::st
 {
 	MessageSender::SendImportantMessageTo(message, type, client);
 }
-ServerMessageSender::ServerMessageSender(NET_DatagramSocket* socket, std::vector<EndpointInfo*>* connectedClients) : MessageSender(socket)
+ServerMessageSender::ServerMessageSender(NET_DatagramSocket* socket, std::vector<EndpointInfo*>* connectedClients, LibSettings* settings) : MessageSender(socket, settings)
 {
 	clients = std::vector<EndpointInfo*>(*connectedClients);
 }
@@ -73,7 +73,7 @@ ImportantMessage* ServerMessageSender::ProcessImportantMessage(NetworkMessage* i
 	return new ImportantMessage(importantMessage);
 }
 
-void ServerMessageSender::SendUnsentMessages(bool skipCheck = false)
+void ServerMessageSender::SendUnsentMessages(float deltaTime, bool skipCheck = false)
 {
 	if (!skipCheck) {
 		if (!ShouldResendMessages()) {
@@ -81,7 +81,7 @@ void ServerMessageSender::SendUnsentMessages(bool skipCheck = false)
 		}
 	}
 	SendUnsentBroadcasts();
-	MessageSender::SendUnsentMessages(true);
+	MessageSender::SendUnsentMessages(deltaTime, true);
 }
 void ServerMessageSender::SendUnsentBroadcasts()
 {

@@ -13,12 +13,12 @@ void MessageSender::IncrementNextMessage()
 	}
 }
 
-MessageSender::MessageSender(NET_DatagramSocket* pSocket)
+MessageSender::MessageSender(NET_DatagramSocket* pSocket, LibSettings* settings)
 {
 	socket = pSocket;
 	nextMessageID = 1;
 	updatesUntilResendMessages = 0;
-	resendMessageRate = 100;
+	resendMessageRate = settings->ackResendDelay;
 }
 
 void MessageSender::SendImportantMessageTo(std::string message, NetworkMessageTypes type, NET_Address* address, int port)
@@ -46,7 +46,7 @@ bool MessageSender::ShouldResendMessages()
 	return false;
 }
 
-void MessageSender::SendUnsentMessages(bool skipCheck = false)
+void MessageSender::SendUnsentMessages(float deltaTime, bool skipCheck = false)
 {
 	if (!skipCheck) {
 		if (!ShouldResendMessages()) {

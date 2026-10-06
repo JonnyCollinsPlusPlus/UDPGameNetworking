@@ -7,6 +7,7 @@
 #include "../NetworkUtilities.h"
 #include "../Endpoints/EndpointInfo.h"
 #include "../ImportantMessage.h"
+#include "../Wrapper/LibSettings.h"
 struct UnsentMessage {
 	int ID;
 	EndpointInfo* target;
@@ -32,12 +33,12 @@ protected:
 	std::vector<int> receivedMessages;
 	void IncrementNextMessage();
 	int nextMessageID;
-	MessageSender(NET_DatagramSocket* socket);
+	MessageSender(NET_DatagramSocket* socket, LibSettings* settings);
 	void SendImportantMessageTo(std::string message, NetworkMessageTypes type, EndpointInfo* client);
 	void SendMessageDirect(NetworkMessageTypes type, std::string message, NET_DatagramSocket* socket, NET_Address* address, int port);
 	bool ShouldResendMessages();
 public:
-	virtual void SendUnsentMessages(bool skipCheck);
+	virtual void SendUnsentMessages(float deltaTime, bool skipCheck);
 
 	virtual void ConfirmationRecieved(NetworkMessage* confirmationMessage);
 	//returns a pointer to the message as an important message and sends confirmation of the message being sent

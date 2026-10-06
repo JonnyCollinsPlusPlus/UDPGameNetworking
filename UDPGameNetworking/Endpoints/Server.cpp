@@ -133,14 +133,14 @@ Server::Server(std::string ip, int serverPort, IWrapper* libWrapper, LibSettings
     }
 
 
-    sender = new ServerMessageSender(socket, connectedClients);
+    sender = new ServerMessageSender(socket, connectedClients, settings);
     StartTimer(0);
 }
 
 void Server::Update(float deltaTime)
 {
     PollSocket();
-    sender->SendUnsentMessages(false);
+    sender->SendUnsentMessages(deltaTime, false);
 }
 
 void Server::Broadcast(NetworkMessageTypes type, std::string message)

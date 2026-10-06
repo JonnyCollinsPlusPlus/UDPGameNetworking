@@ -24,11 +24,11 @@ private:
 	std::vector<ClientMessageChecker*> messageCheckers;
 	void SendUnsentBroadcasts();
 public:
-	ServerMessageSender(NET_DatagramSocket* socket, std::vector<EndpointInfo*>* clients);
+	ServerMessageSender(NET_DatagramSocket* socket, std::vector<EndpointInfo*>* clients, LibSettings* settings);
 	void SendImportantMessage(NetworkMessageTypes type, std::string message, EndpointInfo* client);
 	void BroadcastImportantMessage(NetworkMessageTypes type, std::string message);
 
-	virtual void SendUnsentMessages(bool skipCheck) override;
+	virtual void SendUnsentMessages(float deltaTime, bool skipCheck) override;
 	virtual void ConfirmationRecieved(NetworkMessage* message) override;
 
 	void NewClientConnected(EndpointInfo* client);

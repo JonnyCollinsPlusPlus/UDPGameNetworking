@@ -165,7 +165,7 @@ void Client::ConnectToServer(std::string address)
 		std::cout << "Invalid socket" << SDL_GetError() << std::endl;
 	}
 
-	sender = new ClientMessageSender(socket, serverInfo);
+	sender = new ClientMessageSender(socket, serverInfo, settings);
 	SendConnectRequest();
 }
 
@@ -189,7 +189,7 @@ void Client::Update(float deltaTime)
 		fallbackConnectionRequestDelay--;
 	}
 	if (IsConnected()) {
-		sender->SendUnsentMessages(false);
+		sender->SendUnsentMessages(deltaTime, false);
 		PollSocket();
 		UpdateObjects(deltaTime);
 	}
