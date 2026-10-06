@@ -8,6 +8,8 @@ class DemoGUI{
 private:
 	SDL_Window* guiWindow;
 	SDL_Renderer* guiRenderer;
+    Demo* owner;
+
     int packetLossValue;
     bool client1Lerp;
     bool client1Ghost;
@@ -15,7 +17,7 @@ private:
     bool client2Lerp;
     bool client2Ghost;
     int client2LerpDelay;
-    Demo* owner;
+    int ackResendValue = 100;
 protected:
 public:
     void Initialize(Demo* demo);

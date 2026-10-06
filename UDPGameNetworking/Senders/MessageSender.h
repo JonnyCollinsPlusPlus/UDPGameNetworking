@@ -36,9 +36,9 @@ protected:
 	MessageSender(NET_DatagramSocket* socket, LibSettings* settings);
 	void SendImportantMessageTo(std::string message, NetworkMessageTypes type, EndpointInfo* client);
 	void SendMessageDirect(NetworkMessageTypes type, std::string message, NET_DatagramSocket* socket, NET_Address* address, int port);
-	bool ShouldResendMessages();
+	bool ShouldResendMessages(int deltaTime);
 public:
-	virtual void SendUnsentMessages(float deltaTime, bool skipCheck);
+	virtual void SendUnsentMessages(int deltaTime, bool skipCheck);
 
 	virtual void ConfirmationRecieved(NetworkMessage* confirmationMessage);
 	//returns a pointer to the message as an important message and sends confirmation of the message being sent

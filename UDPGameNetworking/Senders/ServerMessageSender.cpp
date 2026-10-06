@@ -73,10 +73,10 @@ ImportantMessage* ServerMessageSender::ProcessImportantMessage(NetworkMessage* i
 	return new ImportantMessage(importantMessage);
 }
 
-void ServerMessageSender::SendUnsentMessages(float deltaTime, bool skipCheck = false)
+void ServerMessageSender::SendUnsentMessages(int deltaTime, bool skipCheck = false)
 {
 	if (!skipCheck) {
-		if (!ShouldResendMessages()) {
+		if (!ShouldResendMessages(deltaTime)) {
 			return;
 		}
 	}

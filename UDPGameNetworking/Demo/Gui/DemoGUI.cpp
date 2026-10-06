@@ -64,6 +64,7 @@ void DemoGUI::Initialize(Demo* demo)
 
 	ImGui_ImplSDL3_InitForSDLRenderer(guiWindow, guiRenderer);
 	ImGui_ImplSDLRenderer3_Init(guiRenderer);
+
 }
 
 void DemoGUI::Update()
@@ -100,13 +101,20 @@ void DemoGUI::Update()
 
 	if (ClientLerpSection("Client 1", client1Lerp, client1Ghost, client1LerpDelay))
 	{
-		owner->ApplyClient1Settings(client1Lerp, client1Ghost, client1LerpDelay);
+		owner->ApplyClient1Settings(client1Lerp, client1Ghost, client1LerpDelay, ackResendValue);
 	}
 	if (ClientLerpSection("Client 2", client2Lerp, client2Ghost, client2LerpDelay))
 	{
-		owner->ApplyClient2Settings(client2Lerp, client2Ghost, client2LerpDelay);
+		owner->ApplyClient2Settings(client2Lerp, client2Ghost, client2LerpDelay, ackResendValue);
 	}
-
+	ImGui::SeparatorText("TCP-Style Messages");
+	ImGui::TextUnformatted("Message resend delay");
+	ImGui::SetNextItemWidth(-FLT_MIN);
+	if (ImGui::SliderInt("##TCP-Style message resend delay", &ackResendValue, 100, 500, "%dms"))
+	{
+		owner->ApplyClient1Settings(client1Lerp, client1Ghost, client1LerpDelay, ackResendValue);
+		owner->ApplyClient2Settings(client2Lerp, client2Ghost, client2LerpDelay, ackResendValue);
+	}
 	ImGui::End();
 
 	ImGui::Render();

@@ -36,9 +36,9 @@ void MessageSender::SendImportantMessageTo(std::string message, NetworkMessageTy
 
 }
 
-bool MessageSender::ShouldResendMessages()
+bool MessageSender::ShouldResendMessages(int deltaTime)
 {
-	updatesUntilResendMessages--;
+	updatesUntilResendMessages -= deltaTime;
 	if (updatesUntilResendMessages < 0) {
 		updatesUntilResendMessages = resendMessageRate;
 		return true;
@@ -46,10 +46,10 @@ bool MessageSender::ShouldResendMessages()
 	return false;
 }
 
-void MessageSender::SendUnsentMessages(float deltaTime, bool skipCheck = false)
+void MessageSender::SendUnsentMessages(int deltaTime, bool skipCheck = false)
 {
 	if (!skipCheck) {
-		if (!ShouldResendMessages()) {
+		if (!ShouldResendMessages(deltaTime)) {
 			return;
 		}
 	}
