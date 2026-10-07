@@ -46,6 +46,7 @@ void NetworkUtilities::SendMessageDirect(NetworkMessageTypes messageType, std::s
 	std::vector<Uint8>* compressedMessage = PackMessage(messageHeader + message);
 	//sends the compressed message to the specified port and address
 	NET_SendDatagram(socket, address, port, compressedMessage->data(), compressedMessage->size());
+	delete compressedMessage;
 }
 bool NetworkUtilities::GetNextIncoming(NET_DatagramSocket* socket, NetworkMessage*& message, MessageSender* sender)
 {
