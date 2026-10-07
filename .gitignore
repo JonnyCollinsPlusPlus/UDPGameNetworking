@@ -401,3 +401,5 @@ FodyWeavers.xsd
 
 # Cmake output
 out/
+
+!external/**
