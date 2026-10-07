@@ -64,6 +64,7 @@ void DemoClient::HandleInput(SDL_Event& e)
 	if (SDL_GetKeyboardFocus() == window) {
 		clientPlayer->HandleInput(e);
 		colourSquare->HandleInput(e);
+		//TODO Messages sending goes here
 	}
 }
 void DemoClient::SetPacketLoss(int lossRate){
