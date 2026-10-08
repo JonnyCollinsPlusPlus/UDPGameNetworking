@@ -25,7 +25,7 @@ struct UnsentMessage {
 };
 class MessageSender {
 private:
-	int updatesUntilResendMessages;
+	int timeUntilResend;
 	int resendMessageRate;
 protected:
 	NET_DatagramSocket* socket;

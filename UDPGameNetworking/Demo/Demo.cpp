@@ -75,7 +75,7 @@ void DemoClient::ApplySettings(LibSettings* s){
 }
 Demo::Demo()
 {
-	//2 clients each with a different port, 100ms lerp delay, and lerping enabled
+	//2 clients each with a different port, 100ms lerp delay, and lerping enabled, as well as 100ms resend delay
 	client1 = new DemoClient(true, 55511, 100, true, 100);
 	client2 = new DemoClient(false, 55522, 100, true, 100);
 }

@@ -17,9 +17,8 @@ MessageSender::MessageSender(NET_DatagramSocket* pSocket, LibSettings* settings)
 {
 	socket = pSocket;
 	nextMessageID = 1;
-	updatesUntilResendMessages = 0;
+	timeUntilResend = 0;
 	resendMessageRate = settings->ackResendDelay;
-	std::cout << "Initializing message sender. Resend delay@: " << resendMessageRate << std::endl;
 }
 
 void MessageSender::SendImportantMessageTo(std::string message, NetworkMessageTypes type, NET_Address* address, int port)
@@ -39,9 +38,9 @@ void MessageSender::SendImportantMessageTo(std::string message, NetworkMessageTy
 
 bool MessageSender::ShouldResendMessages(int deltaTime)
 {
-	updatesUntilResendMessages -= deltaTime;
-	if (updatesUntilResendMessages < 0) {
-		updatesUntilResendMessages = resendMessageRate;
+	timeUntilResend -= deltaTime;
+	if (timeUntilResend < 0) {
+		timeUntilResend += resendMessageRate;
 		return true;
 	}
 	return false;
