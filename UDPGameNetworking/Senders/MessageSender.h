@@ -13,11 +13,13 @@ struct UnsentMessage {
 	EndpointInfo* target;
 	NetworkMessageTypes type;
 	std::string message;
+	int retries;
 	UnsentMessage(std::string msg, EndpointInfo* msgTarget, int id, NetworkMessageTypes t) {
 		message = NetworkUtilities::AsBinaryString(id, 3) + msg;
 		ID = id;
 		target = msgTarget;
 		type = t;
+		retries = 0;
 	}
 	~UnsentMessage() {
 		delete target;

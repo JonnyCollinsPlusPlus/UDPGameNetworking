@@ -54,7 +54,7 @@ void MessageSender::SendUnsentMessages(int deltaTime, bool skipCheck = false)
 		}
 	}
 	for (UnsentMessage* message : messages) {
-
+		message->retries += 1;
 		NetworkUtilities::SendMessageDirect(message->type, message->message, socket, message->target->address, message->target->port);
 	}
 }
@@ -62,8 +62,11 @@ void MessageSender::SendUnsentMessages(int deltaTime, bool skipCheck = false)
 void MessageSender::ConfirmationRecieved(NetworkMessage* confirmationMessage)
 {
 	int messageID = NetworkUtilities::IntFromBinaryString(confirmationMessage->GetExtraData().substr(0, 12), 3);
-	messages.erase(remove_if(messages.begin(), messages.end(), [messageID](UnsentMessage* m) {if (m->ID == messageID) { delete m; return true; } return false; }), messages.end());
-	std::cout << "SENDER: confirmation received for important message with ID: " << messageID << std::endl;
+	auto message = find_if(messages.begin(), messages.end(), [messageID](UnsentMessage* m) {return (m->ID == messageID);});
+	if (message == messages.end()){return;}
+	std::cout << "SENDER: confirmation received for message with id: " << messageID << " after: " << (*message)->retries << " retries" << std::endl;
+	delete *message;
+	messages.erase(message);
 }
 ImportantMessage* MessageSender::ProcessImportantMessage(NetworkMessage* importantMessage)
 {

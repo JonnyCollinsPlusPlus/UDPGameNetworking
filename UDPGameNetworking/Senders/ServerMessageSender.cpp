@@ -18,7 +18,11 @@ ServerMessageSender::ServerMessageSender(NET_DatagramSocket* socket, std::vector
 void ServerMessageSender::ConfirmationRecieved(NetworkMessage* message)
 {
 	int messageID = NetworkUtilities::IntFromBinaryString(message->GetExtraData(), 3);
-	messages.erase(remove_if(messages.begin(), messages.end(), [messageID](UnsentMessage* m) { if (m->ID == messageID) { delete m; return true; }; return false; }), messages.end());
+	auto msg = find_if(messages.begin(), messages.end(), [messageID](UnsentMessage* m) {return (m->ID == messageID);});
+	if (msg == messages.end()){return;}
+	std::cout << "SENDER: confirmation received for message with id: " << messageID << " after: " << (*msg)->retries << " retries" << std::endl;
+	delete *msg;
+	messages.erase(msg);
 	auto broadcast = find_if(broadcasts.begin(), broadcasts.end(), [messageID](ImportantBroadcast* b) {return b->ID == messageID; });
 	if (broadcast != broadcasts.end()) {
 		(*broadcast)->ConfirmationReceived(message);
