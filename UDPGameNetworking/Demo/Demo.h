@@ -33,7 +33,7 @@ private:
 	SDL_Renderer* renderer;
 protected:
 public:
-	DemoClient(bool isServer, int port, int lerpDelay, bool lerpEnabled);
+	DemoClient(bool isServer, int port, int lerpDelay, bool lerpEnabled, int ackResendDelay);
 	~DemoClient();
 	void Start(int clientNum);
 	void Update(float deltaTime);

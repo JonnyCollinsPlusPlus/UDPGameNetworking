@@ -51,7 +51,14 @@ void Client::ProcessUserMessage(NetworkMessage* msg)
 {
 	//TODO Messages message processing goes here
 	std::string msgData = msg->GetExtraData();
-	std::cout << "MessageReceived: " << msgData << std::endl;
+	if ((dynamic_cast<ImportantMessage*>(msg))){
+		ImportantMessage* impMess = dynamic_cast<ImportantMessage*>(msg);
+		std::cout << "MessageReceived with ID: " << impMess->GetMessageID() << ": " << msgData << std::endl;
+	}
+	else
+	{
+		std::cout << "MessageReceived:" << msgData << std::endl;
+	}
 }
 void Client::ProcessCallback(NetworkMessage* msg)
 {

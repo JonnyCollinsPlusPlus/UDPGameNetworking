@@ -64,7 +64,7 @@ void DemoGUI::Initialize(Demo* demo)
 
 	ImGui_ImplSDL3_InitForSDLRenderer(guiWindow, guiRenderer);
 	ImGui_ImplSDLRenderer3_Init(guiRenderer);
-
+	ackResendValue = 100;
 }
 
 void DemoGUI::Update()

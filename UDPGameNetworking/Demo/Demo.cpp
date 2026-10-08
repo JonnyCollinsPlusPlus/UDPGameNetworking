@@ -2,10 +2,10 @@
 #include "DemoColourSquare.h"
 #include "../CustomStreaming/PositionLerp2D.h"
 #include <string>
-DemoClient::DemoClient(bool server, int port, int lerpDelay, bool lerpEnabled)
+DemoClient::DemoClient(bool server, int port, int lerpDelay, bool lerpEnabled, int ackResendDelay)
 {
 	isServer = server;
-	wrapper = new DemoWrapper(port, lerpDelay, lerpEnabled);
+	wrapper = new DemoWrapper(port, lerpDelay, lerpEnabled, ackResendDelay);
 	clientPlayer = new DemoPlayer(wrapper);
 	colourSquare = new DemoColourSquare(wrapper, 50);
 	started = false;
@@ -76,8 +76,8 @@ void DemoClient::ApplySettings(LibSettings* s){
 Demo::Demo()
 {
 	//2 clients each with a different port, 100ms lerp delay, and lerping enabled
-	client1 = new DemoClient(true, 55511, 100, true);
-	client2 = new DemoClient(false, 55522, 100, true);
+	client1 = new DemoClient(true, 55511, 100, true, 100);
+	client2 = new DemoClient(false, 55522, 100, true, 100);
 }
 
 Demo::~Demo()

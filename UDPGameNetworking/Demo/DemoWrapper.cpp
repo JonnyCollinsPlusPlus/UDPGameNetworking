@@ -7,7 +7,7 @@
 #include "../Endpoints/Server.h"
 #include "../Demo/ColourValue.h"
 #include "../CustomStreaming/PositionLerp2D.h"
-DemoWrapper::DemoWrapper(int port, int lerpDelay, bool lerpEnabled)
+DemoWrapper::DemoWrapper(int port, int lerpDelay, bool lerpEnabled, int ackResendDelay)
 {
 	plannedPort = port;
 	server = nullptr;
@@ -17,6 +17,7 @@ DemoWrapper::DemoWrapper(int port, int lerpDelay, bool lerpEnabled)
 	settings = new LibSettings();
 	settings->lerpDelay = lerpDelay;
 	settings->lerpEnabled = lerpEnabled;
+	settings->ackResendDelay = ackResendDelay;
 }
 
 void DemoWrapper::Update(float deltaTime)
