@@ -173,7 +173,7 @@ void DemoPlayer::HandleInput(SDL_Event& e)
 			y += 3;
 		}
 		if (e.key.key == SDLK_M) {
-			wrapper->CallbackTest();
+			wrapper->SendMessage();
 		}
 		if (x > 492) {x = 492;}
 		if (y > 492) {y = 492;}

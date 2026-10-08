@@ -36,6 +36,7 @@ public:
 
 
 	void DrawOtherPlayers(SDL_Renderer* renderer);
+	void SendMessage();
 	void CallbackTest();
 	int GetClientTime();
 };

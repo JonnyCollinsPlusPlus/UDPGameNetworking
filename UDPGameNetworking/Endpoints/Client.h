@@ -24,6 +24,8 @@ private:
 
 	void ProcessIncomingIDRequest(NetworkMessage* msg);
 	void ProcessUserMessage(NetworkMessage* msg);
+	void ProcessCallback(NetworkMessage* msg);
+
 	void ProcessObjectMessage(NetworkMessage* msg);
 	void InitializeNewObject(NetworkMessage* msg);
 

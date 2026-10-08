@@ -12,6 +12,8 @@ void Client::ProcessMessage(NetworkMessage* msg)
 	case UserUnImportant:
 		ProcessUserMessage(msg);
 		return;
+	case InvokeCallback:
+		ProcessCallback(msg);
 	case IDRequest:
 		ProcessIncomingIDRequest(msg);
 		return;
@@ -47,6 +49,11 @@ void Client::ProcessIncomingIDRequest(NetworkMessage* msg)
 void Client::ProcessUserMessage(NetworkMessage* msg)
 {
 	//TODO Messages message processing goes here
+	std::string msgData = msg->GetExtraData();
+	std::cout << "MessageReceived: " << msgData << std::endl;
+}
+void Client::ProcessCallback(NetworkMessage* msg)
+{
 	std::string msgData = msg->GetExtraData();
 	int callbackID = NetworkUtilities::IntFromBinaryString(msgData.substr(0, 12), 3);
 	std::string optionalExtraData = msgData.substr(12);

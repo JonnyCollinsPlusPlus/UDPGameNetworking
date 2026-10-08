@@ -165,7 +165,11 @@ void DemoWrapper::DrawOtherPlayers(SDL_Renderer* renderer)
 
 void DemoWrapper::CallbackTest()
 {
-	client->SendServerMessage(UserImportant, NetworkUtilities::AsBinaryString(500, 3) + "1010");
+	client->SendServerMessage(InvokeCallback, NetworkUtilities::AsBinaryString(500, 3) + "1010");
+}
+void DemoWrapper::SendMessage()
+{
+	client->SendServerMessage(UserImportant, "1010");
 }
 
 int DemoWrapper::GetClientTime()
