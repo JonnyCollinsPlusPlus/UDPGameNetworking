@@ -123,6 +123,7 @@ bool Demo::Done()
 
 void Demo::SetPacketLoss(int lossRate){
 	client1->SetPacketLoss(lossRate);
+	client2->SetPacketLoss(lossRate);
 }
 
 void Demo::ApplyClient1Settings(bool lerpEnabled, bool ghostEnabled, int lerpDelay, int ackResendDelay){
