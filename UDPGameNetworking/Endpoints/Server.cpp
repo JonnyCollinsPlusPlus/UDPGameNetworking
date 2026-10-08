@@ -26,6 +26,13 @@ void Server::ConfirmClientConnection(NetworkMessage* msg)
     connectingAClient = false;
     connectedClients->push_back(client);
     sender->NewClientConnected(client);
+
+    for (auto& entry : knownInits) {
+    NetworkUtilities::SendMessageTo(NetworkedObjectInit, entry.second, socket,
+                                    client->address, client->port, sender);
+    }
+
+
     connectorInfo = nullptr;
     std::cout << "Successfully connected client from address: " << NET_GetAddressString(client->address) << std::endl;
 }
@@ -104,6 +111,10 @@ void Server::ProcessObjectMessage(NetworkMessage* msg)
 
 void Server::InitializeNewObject(NetworkMessage* msg)
 {
+    std::string data = msg->GetExtraData();
+    std::string id = data.substr(0, objectIDBits);
+    if (knownInits.count(id)) return;
+    knownInits[id] = data;
     Broadcast(NetworkedObjectInit, msg->GetExtraData());
 }
 

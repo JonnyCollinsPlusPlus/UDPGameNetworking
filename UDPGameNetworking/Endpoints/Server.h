@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <queue>
+#include <map>
 #include "../Senders/ServerMessageSender.h"
 #include "../Wrapper/Libsettings.h"
 #include "../UDPGameNetworkingAPI.h"
@@ -22,6 +23,8 @@ private:
 	std::vector<OwnedNetworkObject*>* ownedObjects;
 	std::vector<UnownedNetworkObject*>* nonOwnedObjects;
 	std::queue<int>* availableIDs;
+
+	std::map<std::string, std::string> knownInits;
 
 	int GetNextFreeID(); // for objects
 
