@@ -49,7 +49,7 @@ void Server::TryConnectClient(NetworkMessage* msg)
 bool Server::IsAlreadyConnected(EndpointInfo* client)
 {
     for (EndpointInfo* connectedClient : *connectedClients) {
-        if (client == connectedClient) {
+        if (*client == *connectedClient) {
             return true;
         }
     }
@@ -71,6 +71,7 @@ void Server::ProcessMessage(NetworkMessage* msg)
         return;
     case NetworkedObjectInit:
         InitializeNewObject(msg);
+        return;
     case NetworkedObjectMsg:
         ProcessObjectMessage(msg);
         return;
@@ -167,7 +168,7 @@ int Server::GetConnectedClientCount()
 
 void Server::SendMessageTo(NetworkMessageTypes type, std::string message, EndpointInfo* receiver)
 {
-    NetworkUtilities::SendMessageTo(type, message, socket, address, port, sender);
+    NetworkUtilities::SendMessageTo(type, message, socket, receiver->address, receiver->port, sender);
 }
 
 

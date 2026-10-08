@@ -14,6 +14,7 @@ void Client::ProcessMessage(NetworkMessage* msg)
 		return;
 	case InvokeCallback:
 		ProcessCallback(msg);
+		return;
 	case IDRequest:
 		ProcessIncomingIDRequest(msg);
 		return;
