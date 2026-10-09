@@ -11,7 +11,7 @@ void ServerMessageSender::SendImportantMessage(NetworkMessageTypes type, std::st
 {
 	MessageSender::SendImportantMessageTo(message, type, client);
 }
-ServerMessageSender::ServerMessageSender(NET_DatagramSocket* socket, std::vector<EndpointInfo*>* connectedClients, LibSettings* settings) : MessageSender(socket, settings)
+ServerMessageSender::ServerMessageSender(NET_DatagramSocket* socket, std::vector<EndpointInfo*>* connectedClients, LibSettings* settings) : MessageSender(socket, settings, nullptr)
 {
 	clients = std::vector<EndpointInfo*>(*connectedClients);
 }

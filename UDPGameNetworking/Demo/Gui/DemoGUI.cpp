@@ -25,7 +25,7 @@ static bool ClientLerpSection(const char* title, bool& lerpEnabled, bool& ghostE
 void DemoGUI::Initialize(Demo* demo)
 {
 	owner = demo;
-	guiWindow = SDL_CreateWindow("UDP Networking Settings", 512, 512, SDL_WINDOW_RESIZABLE);
+	guiWindow = SDL_CreateWindow("UDP Networking Settings", 512, 640, SDL_WINDOW_RESIZABLE);
 	guiRenderer = SDL_CreateRenderer(guiWindow, NULL);
 	SDL_SetWindowPosition(guiWindow, 100, 100);
 

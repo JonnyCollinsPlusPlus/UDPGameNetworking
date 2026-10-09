@@ -1,7 +1,7 @@
 #include "ClientMessageSender.h"
 
 
-ClientMessageSender::ClientMessageSender(NET_DatagramSocket* socket, EndpointInfo* serverInfo, LibSettings* settings) : MessageSender(socket, settings)
+ClientMessageSender::ClientMessageSender(NET_DatagramSocket* socket, EndpointInfo* serverInfo, LibSettings* settings, Client* owner) : MessageSender(socket, settings, owner)
 {
 	server = serverInfo->address;
 	serverPort = serverInfo->port;

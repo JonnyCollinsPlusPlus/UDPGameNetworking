@@ -5,6 +5,6 @@ private:
 	int serverPort;
 	NET_Address* server;
 public:
-	ClientMessageSender(NET_DatagramSocket* socket, EndpointInfo* serverInfo, LibSettings* settings);
+	ClientMessageSender(NET_DatagramSocket* socket, EndpointInfo* serverInfo, LibSettings* settings, Client* owner);
 	void SendImportantMessage(NetworkMessageTypes type, std::string message);
 };

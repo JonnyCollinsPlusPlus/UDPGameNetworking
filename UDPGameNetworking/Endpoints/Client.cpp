@@ -181,7 +181,7 @@ void Client::ConnectToServer(std::string address)
 		std::cout << "Invalid socket" << SDL_GetError() << std::endl;
 	}
 
-	sender = new ClientMessageSender(socket, serverInfo, settings);
+	sender = new ClientMessageSender(socket, serverInfo, settings, this);
 	SendConnectRequest();
 }
 

@@ -37,7 +37,7 @@ protected:
 	void IncrementNextMessage();
 	int nextMessageID;
 	Client* owner;
-	MessageSender(NET_DatagramSocket* socket, LibSettings* settings);
+	MessageSender(NET_DatagramSocket* socket, LibSettings* settings, Client* ownedBy);
 	void SendImportantMessageTo(std::string message, NetworkMessageTypes type, EndpointInfo* client);
 	void SendMessageDirect(NetworkMessageTypes type, std::string message, NET_DatagramSocket* socket, NET_Address* address, int port);
 	bool ShouldResendMessages(int deltaTime);

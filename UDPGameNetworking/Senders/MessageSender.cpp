@@ -13,8 +13,9 @@ void MessageSender::IncrementNextMessage()
 	}
 }
 
-MessageSender::MessageSender(NET_DatagramSocket* pSocket, LibSettings* settings)
+MessageSender::MessageSender(NET_DatagramSocket* pSocket, LibSettings* settings, Client* ownedBy)
 {
+	owner = ownedBy;
 	socket = pSocket;
 	nextMessageID = 1;
 	timeUntilResend = 0;
@@ -23,6 +24,7 @@ MessageSender::MessageSender(NET_DatagramSocket* pSocket, LibSettings* settings)
 
 void MessageSender::SendImportantMessageTo(std::string message, NetworkMessageTypes type, NET_Address* address, int port)
 {
+	SetMessageStatus("SENDING: initial send");
 	UnsentMessage* msg = new UnsentMessage(message, new EndpointInfo(address, port), nextMessageID, type);
 	messages.push_back(msg);
 	IncrementNextMessage();
@@ -48,6 +50,7 @@ bool MessageSender::ShouldResendMessages(int deltaTime)
 
 void MessageSender::SetMessageStatus(std::string status)
 {
+	if (!owner) {return;}
 	owner->messageStatus = status;
 }
 
@@ -69,7 +72,10 @@ void MessageSender::ConfirmationRecieved(NetworkMessage* confirmationMessage)
 	int messageID = NetworkUtilities::IntFromBinaryString(confirmationMessage->GetExtraData().substr(0, 12), 3);
 	auto message = find_if(messages.begin(), messages.end(), [messageID](UnsentMessage* m) {return (m->ID == messageID);});
 	if (message == messages.end()){return;}
-	std::cout << "SENDER: confirmation received for message with id: " << messageID << " after: " << (*message)->retries << " retries" << std::endl;
+	std::string status = "SENDING: confirmation received after ";
+	status.append(std::to_string((*message)->retries));
+	status.append(" attempts");
+	SetMessageStatus(status);
 	delete *message;
 	messages.erase(message);
 }
