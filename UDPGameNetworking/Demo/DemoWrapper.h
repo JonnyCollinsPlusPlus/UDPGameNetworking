@@ -39,4 +39,5 @@ public:
 	void SendMessage();
 	void CallbackTest();
 	int GetClientTime();
+	std::string GetClientMessageStatus();
 };

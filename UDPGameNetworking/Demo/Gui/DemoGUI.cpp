@@ -115,6 +115,11 @@ void DemoGUI::Update()
 		owner->ApplyClient1Settings(client1Lerp, client1Ghost, client1LerpDelay, ackResendValue);
 		owner->ApplyClient2Settings(client2Lerp, client2Ghost, client2LerpDelay, ackResendValue);
 	}
+
+
+	ImGui::Separator();
+	ImGui::Text("Client 1: %s", owner->GetClient1MessageStatus().c_str());
+	ImGui::Text("Client 2: %s", owner->GetClient2MessageStatus().c_str());
 	ImGui::End();
 
 	ImGui::Render();

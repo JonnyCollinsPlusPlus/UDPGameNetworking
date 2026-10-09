@@ -8,6 +8,7 @@
 #include "../Endpoints/EndpointInfo.h"
 #include "../ImportantMessage.h"
 #include "../Wrapper/LibSettings.h"
+class Client;
 struct UnsentMessage {
 	int ID;
 	EndpointInfo* target;
@@ -35,10 +36,12 @@ protected:
 	std::vector<int> receivedMessages;
 	void IncrementNextMessage();
 	int nextMessageID;
+	Client* owner;
 	MessageSender(NET_DatagramSocket* socket, LibSettings* settings);
 	void SendImportantMessageTo(std::string message, NetworkMessageTypes type, EndpointInfo* client);
 	void SendMessageDirect(NetworkMessageTypes type, std::string message, NET_DatagramSocket* socket, NET_Address* address, int port);
 	bool ShouldResendMessages(int deltaTime);
+	void SetMessageStatus(std::string status);
 public:
 	virtual void SendUnsentMessages(int deltaTime, bool skipCheck);
 

@@ -1,5 +1,5 @@
 #include "MessageSender.h"
-
+#include "../Endpoints/Client.h"
 void MessageSender::SendMessageDirect(NetworkMessageTypes type, std::string message, NET_DatagramSocket* socket, NET_Address* address, int port)
 {
 	NetworkUtilities::SendMessageDirect(type, message, socket, address, port);
@@ -44,6 +44,11 @@ bool MessageSender::ShouldResendMessages(int deltaTime)
 		return true;
 	}
 	return false;
+}
+
+void MessageSender::SetMessageStatus(std::string status)
+{
+	owner->messageStatus = status;
 }
 
 void MessageSender::SendUnsentMessages(int deltaTime, bool skipCheck = false)

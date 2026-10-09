@@ -178,6 +178,11 @@ int DemoWrapper::GetClientTime()
 	return client->GetTime();;
 }
 
+std::string DemoWrapper::GetClientMessageStatus()
+{
+    return client->messageStatus;
+}
+
 void DemoWrapper::SetPacketLoss(int lossRate){
 	client->SetSimulatedPacketLoss(lossRate);
 }

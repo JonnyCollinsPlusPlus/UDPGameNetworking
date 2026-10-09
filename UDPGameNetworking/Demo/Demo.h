@@ -27,7 +27,6 @@ private:
 	bool started;
 	bool isServer;
 	DemoPlayer* clientPlayer;
-	DemoColourSquare* colourSquare;
 	DemoWrapper* wrapper;
 	SDL_Window* window;
 	SDL_Renderer* renderer;
@@ -42,6 +41,7 @@ public:
 	void HandleInput(SDL_Event& e);
 	void SetPacketLoss(int lossRate);
 	void ApplySettings(LibSettings* s);
+	std::string GetMessageStatus();
 };
 class Demo {
 private:
@@ -61,4 +61,6 @@ public:
 	void SetPacketLoss(int lossRate);
 	void ApplyClient1Settings(bool lerpEnabled, bool ghostEnabled, int lerpDelay, int ackResendDelay);
 	void ApplyClient2Settings(bool lerpEnabled, bool ghostEnabled, int lerpDelay, int ackResendDelay);
+	std::string GetClient1MessageStatus();
+	std::string GetClient2MessageStatus();
 };

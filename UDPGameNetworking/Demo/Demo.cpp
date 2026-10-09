@@ -7,7 +7,6 @@ DemoClient::DemoClient(bool server, int port, int lerpDelay, bool lerpEnabled, i
 	isServer = server;
 	wrapper = new DemoWrapper(port, lerpDelay, lerpEnabled, ackResendDelay);
 	clientPlayer = new DemoPlayer(wrapper);
-	colourSquare = new DemoColourSquare(wrapper, 50);
 	started = false;
 	window = nullptr;
 	renderer = nullptr;
@@ -16,7 +15,6 @@ DemoClient::DemoClient(bool server, int port, int lerpDelay, bool lerpEnabled, i
 DemoClient::~DemoClient()
 {
 	delete clientPlayer;
-	delete colourSquare;
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 }
@@ -32,7 +30,6 @@ void DemoClient::Start(int clientNum)
 	}
 	wrapper->StartClient();
 	wrapper->RegisterObject(clientPlayer);
-	wrapper->RegisterObject(colourSquare);
 	wrapper->RegisterCallback(500);
 	started = true;
 	std::string windowName = "Client " + std::to_string(clientNum);
@@ -50,7 +47,6 @@ void DemoClient::Update(float deltaTime)
 	const SDL_FRect rect = clientPlayer->GetRect();
 	SDL_RenderFillRect(renderer, &rect);
 	wrapper->DrawOtherPlayers(renderer);
-	colourSquare->Render(renderer);
 	SDL_RenderPresent(renderer);
 	wrapper->Update(deltaTime);
 }
@@ -63,7 +59,6 @@ void DemoClient::HandleInput(SDL_Event& e)
 {
 	if (SDL_GetKeyboardFocus() == window) {
 		clientPlayer->HandleInput(e);
-		colourSquare->HandleInput(e);
 		//TODO Messages sending goes here
 	}
 }
@@ -72,6 +67,10 @@ void DemoClient::SetPacketLoss(int lossRate){
 }
 void DemoClient::ApplySettings(LibSettings* s){
 	wrapper->ApplySettings(s);
+}
+std::string DemoClient::GetMessageStatus()
+{
+    return wrapper->GetClientMessageStatus();
 }
 Demo::Demo()
 {
@@ -145,6 +144,15 @@ void Demo::ApplyClient2Settings(bool lerpEnabled, bool ghostEnabled, int lerpDel
 	delete s;
 }
 
+std::string Demo::GetClient1MessageStatus()
+{
+    return client1->GetMessageStatus();
+}
+
+std::string Demo::GetClient2MessageStatus()
+{
+    return client2->GetMessageStatus();
+}
 
 DemoPlayer::DemoPlayer(DemoWrapper* libWrapper)
 {

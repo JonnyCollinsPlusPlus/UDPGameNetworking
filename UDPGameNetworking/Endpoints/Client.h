@@ -51,4 +51,5 @@ public:
 	void RegisterObject(IEngineObject* obj);
 
 	void SetSimulatedPacketLoss(int lossRate);
+	std::string messageStatus;
 };
