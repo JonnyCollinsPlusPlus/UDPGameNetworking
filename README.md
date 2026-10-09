@@ -10,18 +10,15 @@ A lightweight C++ UDP networking solution designed specifically for game develop
 
 ### **Demo**
 - Two clients running simultaneously on one system
-- Each client controls a square with real time position streaming and a coloured cube
+- Each client controls a square with real time position streaming
 - **Controls**:
 	- 'WASD' Move your square
 	- 'Mouse Hover' Select which client window to control
-	- 'R', 'G', 'B' Select your squares colour
+	- 'M' send a message from the selected client, see result in settings window
+- Change settings and see how the behaviour changes
 
 ### **Installation**
-- Download latest relase .lib and .dll files
-- Link as required
-- For Demo, download DemoApp.exe, as well as dll and lib files for UDPGameNetworking, and SDL3 and SDL3_net files
-- Include all in one folder
-- Run DemoApp.exe
+- clone the repo, build with cmake, and run
 
 ### **Status**
 - **Working**:
